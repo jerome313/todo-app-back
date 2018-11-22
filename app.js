@@ -13,6 +13,13 @@ import todoRoutes from './routes/todo.server.route';
 // define our app using express
 const app = express();
 
+let dev_db_url = 'mongodb://jerome:JeromeJoseph1@ds029635.mlab.com:29635/todo-app';
+let mongoDB = dev_db_url;
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 // express-busboy to parse multipart/form-data
 bb.extend(app);
 
@@ -35,10 +42,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 const port = process.env.PORT || 3001;
 
 // connect to database
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/mern-todo-app', {
-  useMongoClient: true,
-});
+// mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb://localhost/mern-todo-app', {
+//   useMongoClient: true,
+// });
 
 // add Source Map Support
 SourceMapSupport.install();
